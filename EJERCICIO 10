@@ -1,0 +1,20 @@
+with information_DNI as (
+			SELECT
+				ivr_id,
+				CASE
+					when step_name = 'CUSTOMERINFOBYPHONE.TX' and step_result = 'OK'
+					THEN 1
+					ELSE 0
+				END AS info_by_dni_lg
+			from ivr_steps
+			where ivr_id is not null
+			)
+			
+SELECT
+	ivr_id,
+	max(info_by_dni_lg) as info_by_dni_lg
+from information_DNI
+GROUP by ivr_id
+ORDER by info_by_dni_lg DESC
+
+;
