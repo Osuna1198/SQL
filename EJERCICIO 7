@@ -1,0 +1,19 @@
+with billing_client as (
+ 
+ 			SELECT DISTINCT on (ivr_id)
+ 					ivr_id,
+ 					module_sequece,
+ 					step_sequence,
+ 					billing_account_id,
+ 					document_type,
+ 					document_identification
+ 			FROM ivr_steps
+ 			where billing_account_id is not null and billing_account_id != 'UNKNOWN'
+ 			order by ivr_id, module_sequece
+ 			)
+update ivr_detail detail 
+set billing_account_id = bill.billing_account_id
+from billing_client bill
+where detail.ivr_id = bill.ivr_id
+
+;
