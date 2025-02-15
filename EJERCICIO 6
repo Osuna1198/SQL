@@ -1,0 +1,18 @@
+with phone_data as (
+		select DISTINCT on (ivr_id)
+			ivr_id,
+			module_sequece,
+			step_sequence,
+			customer_phone,
+			document_type,
+			document_identification
+		from ivr_steps
+		where customer_phone is not null and customer_phone != 'UNKNOWN'
+		order by ivr_id, module_sequece
+	)
+UPDATE ivr_detail detail
+set customer_phone = phone.customer_phone
+FROM phone_data phone 
+where detail.ivr_id = phone.ivr_id
+
+;
