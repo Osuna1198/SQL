@@ -1,0 +1,17 @@
+WITH masiva_indication as (
+		SELECT
+			ivr_id,
+			case 
+				WHEN array_length(string_to_array(module_aggregation, ','),1) > 0
+					and 'AVERIA_MASIVA' = ANY(string_to_array(module_aggregation, ','))
+				
+				THEN 1
+				ELSE 0
+			end as masiva_lg
+		FROM ivr_calls
+		)
+SELECT 
+		*
+FROM masiva_indication
+ORDER BY masiva_lg DESC
+;
