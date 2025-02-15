@@ -1,0 +1,20 @@
+update ivr_detail 
+		set document_type = subquery.document_type,
+   		document_identification = subquery.document_identification
+    
+from (
+    select 
+    		distinct on (ivr_id) 
+    		ivr_id, 
+   		 	document_type, 
+    		document_identification
+    from ivr_steps
+    
+    where document_type is not null and document_identification is not null 
+    order by ivr_id, step_sequence
+    
+    ) as subquery
+    
+where ivr_detail.ivr_id = subquery.ivr_id
+
+;
