@@ -1,0 +1,51 @@
+-- CREAR LA BASE DE DATOS
+CREATE DATABASE keepcoding;
+
+\c keepcoding
+
+;
+
+-- TABLA BOOTCAMPS
+CREATE TABLE BOOTCAMPS (
+		Bootcamps_id  SERIAL PRIMARY KEY, 
+		Nombre VARCHAR NOT NULL,
+		Fecha_inicial DATE NOT NULL,
+		Fecha_final DATE NOT NULL,
+		FOREIGN KEY (Alumnos_id) REFERENCES alumnos (alumno_id)
+		Precio INT NOT NULL,
+		FOREIGN KEY (Modulos_id) REFERENCES modulos (modulo_id) 
+
+);
+
+-- TABLA ALUMNOS
+CREATE TABLE ALUMNOS (
+		Alumno_id SERIAL PRIMARY KEY,
+		Nombre VARCHAR NOT NULL,
+		Apellidos VARCHAR NOT NULL,
+		Email VARCHAR NOT NULL,
+		DNI VARCHAR NOT NULL,
+		Sexo VARCHAR NOT NULL,
+		Telefono VARCHAR NOT NULL
+)
+;
+
+-- TABLA MODULOS
+CREATE TABLE MODULOS (
+		Modulo_id SERIAL PRIMARY KEY,
+		Nombre VARCHAR NOT NULL,
+		Duracion INT NOT NULL,
+		FOREIGN KEY (Alumnos_id) REFERENCES alumnos (alumno_id),
+		FOREIGN KEY (Profesores_id) REFERENCES profesores (profesor_id)
+)
+;
+
+-- TABLA PROFESORES
+CREATE TABLE PROFESORES (
+		Profesor_id SERIAL PRIMARY KEY,
+		Nombre VARCHAR NOT NULL,
+		Apellidos VARCHAR NOT NULL,
+		Email VARCHAR NOT NULL,
+		Sexo VARCHAR NOT NULL,
+		Telefono VARCHAR NOT NULL
+)
+;
